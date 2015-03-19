@@ -1,4 +1,4 @@
-Usage: python TraP_fits_QC.py <sigmaClip> <sigmaRej> <f> <frequencies>
+Usage: python TraP_fits_QC.py <sigmaClip> <sigmaRej> <f> <frequencies> <theory>
 
 Script updated for TraP Release 2 databases. If using TraP Release 1.1 please use older version.
 
@@ -11,12 +11,13 @@ Instructions:
 
 1. Move to the directory containing all the fits files you want to process (it automatically uses every fits file in the current working directory)
 2. Run this script: 
-    python TraP_fits_QC.py <sigmaClip> <sigmaRej> <f> <frequencies>
+    python TraP_fits_QC.py <sigmaClip> <sigmaRej> <f> <frequencies> <theory>
 
     <sigmaClip>       : The clipping value for RMS calculation (equivalent to sigma in the TraP job_params.cfg file) 
     <sigmaRej>	      : The sigma used for rejection of images. The RMS values are fitted with a Gaussian and all images that are >sigmaRej sigma away from the mean are rejected. 
     <f>	              : The subsection of the image used for calculating the RMS (as in the TraP job_params.cfg file)
-    <frequencies>     : "T"/"F" - do you want to fit all the frequencies together or separately
+    <frequencies>     : "T"/"F" - do you want to fit all the frequencies together or separately, if set to T then the rejection is also on a per frequency basis (i.e. different frequencies have different thresholds)
+    <theory>	      : "T"/"F" - do you want to reject images based on the ratio between observed and theoretical noise? Requires the theoretical noise to be in the fitsheader in the field "THRY_RMS" otherwise the observed noise is assumed to be the theoretical value (and hence the ratio equals 1).
 
    In the working folder, a number of png images are output which show an overview of your images. Additionally, a file "images_to_process.py" is output which can be used with TraP to only process the good images.
    

@@ -119,7 +119,6 @@ def plothist(x, name,filename,sigma,freq,p):
     sigcut2=plsq[0][0]-plsq[0][1]*sigma # min threshold defined as (mean - RMS * sigma)
     plt.axvline(x=sigcut, linewidth=2, color='k',linestyle='--')
     plt.axvline(x=sigcut2, linewidth=2, color='k', linestyle='--')
-    print min(range_x),max(range_x)
     xvals=np.arange(int(min(range_x)),int(max(range_x)+1.5),1)
     xlabs=[str(10.**a) for a in xvals]
     plt.xticks(xvals,xlabs)

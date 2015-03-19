@@ -143,6 +143,7 @@ unique_frequencies = np.unique([int(a[6]) for a in source_data])
 
 print unique_frequencies
 
+
 #for src in unique_sources:
 #for x in sources:
 #    jd = coords.julian_date(datetime.strptime(x[13].split('.')[0], '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.utc), modified=True) # make time for the midpoint of the observation
@@ -154,7 +155,6 @@ print unique_frequencies
 #    else:
 #        source_data.append([float(x[16]),float(x[15]),float(x[6]),float(x[7]),avgs[str(x[11])],coords.julian_date(datetime.strptime(x[13], '%Y-%m-%d %H:%M:%S.%f').replace(tzinfo=pytz.utc), modified=True),int(float(a[8])/1e6),coords.angsep(x[16],x[15],x[3],x[2])/3600.,-1,-1,src_assoc[str(x[11])], float(x[10]), x[14]]) # [RA, Dec, intFlx, intFlxErr, avgIntFlx, mjdTStart, Frequency, sepImgCentre, SideRealTime, Elevation, skymodel_flux, Image RMS, Image, runcatID]
 
-plt.close()
 
 
 # Setting up the plot
@@ -405,3 +405,25 @@ plt.close()
 
 
 
+
+#ptRA and ptDec
+ptRA=0.0
+ptDec=-27.0
+
+fig = plt.figure(1,figsize=(12,10))
+
+datesTMP=np.unique([a[5] for a in source_data])
+
+imgPltData={str(a):[[coords.alphasep(float(b[0]),ptRA,0.,0.)/3600., float(b[1])-ptDec, float(b[2])-float(b[4]), float(b[2])/float(b[4])] for b in source_data if b[5]==a] for a in datesTMP}
+colorScale1=avg1+2.*stdev1
+colorScale2=avg1-2.*stdev1
+for a in imgPltData.keys():
+    for c in range(len(imgPltData[a])):
+        if imgPltData[a][c][0]>180.:
+            imgPltData[a][c][0] = imgPltData[a][c][0]-360.
+    levels=[c[3] for c in imgPltData[a]]
+    plt.scatter([b[0] for b in imgPltData[a]],[c[1] for c in imgPltData[a]],c=levels,cmap='coolwarm', vmin=colorScale2, vmax=colorScale1, s=20, lw = 0)
+    plt.colorbar()
+    plt.savefig('ds'+str(dataset_id)+'_'+str(a)+'_testplot.png')
+    plt.close()
+exit()

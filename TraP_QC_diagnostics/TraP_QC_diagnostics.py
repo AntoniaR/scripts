@@ -50,6 +50,9 @@ noise_avg=10.**(noise_avg_log)
 noise_max=10.**(noise_avg_log+noise_scatter_log)-10.**(noise_avg_log)
 noise_min=10.**(noise_avg_log)-10.**(noise_avg_log-noise_scatter_log)
 print 'Average RMS Noise in images (1 sigma range, frequency='+str(freq)+' MHz): '+str(round(noise_avg,1))+' (+'+str(round(noise_max,1))+',-'+str(round(noise_min,1))+') mJy'
+
+plt_ratios=True
+
 if plt_ratios:
     # RMS/Theoretical limit for TraP
     ratio_avg_log, ratio_scatter_log, ratio_threshold_log = tools.fit_hist([np.log10(image_info[n][6]) for n in range(len(image_info))], sigma, r'Observed RMS / Theoretical Noise', 'ds'+dataset_id+'_ratio', freq)
@@ -66,6 +69,8 @@ else:
     ratio_threshold2=0.
 
 tools.plotfig_scatter(image_info, 7, 4, 'Ellipticity (Bmaj/Bmin)', 'RMS (Jy)', 'ds'+dataset_id+'_theoretical_ellipticity_'+str(freq)+'MHz')
+
+plt_ratios=True
 
 if plt_freqs == 'T':
     for freq in frequencies:
