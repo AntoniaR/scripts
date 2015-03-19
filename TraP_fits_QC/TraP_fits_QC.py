@@ -41,14 +41,14 @@ if allFreqs=='T':
         noise_avg=10.**(noise_avg_log)
         noise_max=10.**(noise_avg_log+noise_scatter_log)-10.**(noise_avg_log)
         noise_min=10.**(noise_avg_log)-10.**(noise_avg_log-noise_scatter_log)
-        print 'Average RMS Noise in images (1 sigma range, frequency='+str(frequency)+' MHz): '+str(frequency)+' MHz): '+str(noise_avg)+' (+'+str(noise_max)+',-'+str(noise_min)+') mJy'
+        print 'Average RMS Noise in '+str(len([np.log10(n[2]) for n in imageData if n[1]==frequency]))+' images (1 sigma range, frequency='+str(frequency)+' MHz): '+str(np.round(noise_avg,3))+' (+'+str(np.round(noise_max,3))+',-'+str(np.round(noise_min,3))+') mJy'
         thresholds[frequency]=([noise_avg,noise_max*sigmaRej,noise_min*sigmaRej*-1.])
 
         noiserat_avg_log, noiserat_scatter_log, noiserat_threshold_log = tools.fit_hist([np.log10(n[3]) for n in imageData if n[1]==frequency], sigmaRej, r'RMS / Theory', 'ratio', frequency)
         noiserat_avg=10.**(noiserat_avg_log)
         noiserat_max=10.**(noiserat_avg_log+noiserat_scatter_log)-10.**(noiserat_avg_log)
         noiserat_min=10.**(noiserat_avg_log)-10.**(noiserat_avg_log-noiserat_scatter_log)
-        print 'Average RMS Noise ratio in images (1 sigma range, frequency='+str(frequency)+' MHz): '+str(frequency)+' MHz): '+str(noiserat_avg)+' (+'+str(noiserat_max)+',-'+str(noiserat_min)+') mJy'
+        print 'Average RMS Noise ratio in '+str(len([np.log10(n[3]) for n in imageData if n[1]==frequency]))+' images (1 sigma range, frequency='+str(frequency)+' MHz): '+str(np.round(noiserat_avg,3))+' (+'+str(np.round(noiserat_max,3))+',-'+str(np.round(noiserat_min,3))+')'
         thresholds2[frequency]=([noiserat_avg,noiserat_max*sigmaRej,noiserat_min*sigmaRej*-1.])
         
 
@@ -59,7 +59,7 @@ noise_avg_log, noise_scatter_log, noise_threshold_log = tools.fit_hist(TMPdata, 
 noise_avg=10.**(noise_avg_log)
 noise_max=10.**(noise_avg_log+noise_scatter_log)-10.**(noise_avg_log)
 noise_min=10.**(noise_avg_log)-10.**(noise_avg_log-noise_scatter_log)
-print 'Average RMS Noise in images (1 sigma range, frequency='+str(frequency)+' MHz): '+str(noise_avg)+' (+'+str(noise_max)+',-'+str(noise_min)+') mJy'
+print 'Average RMS Noise in '+str(len(TMPdata))+' images (1 sigma range, frequency='+str(frequency)+' MHz): '+str(np.round(noise_avg,3))+' (+'+str(np.round(noise_max,3))+',-'+str(np.round(noise_min,3))+') mJy'
 thresholds[frequency]=[noise_avg,noise_max*sigmaRej,noise_min*sigmaRej*-1.]
 
 TMPdata2 = np.array([np.log10(n[3]) for n in imageData])
@@ -68,7 +68,7 @@ noiserat_avg_log, noiserat_scatter_log, noiserat_threshold_log = tools.fit_hist(
 noiserat_avg=10.**(noiserat_avg_log)
 noiserat_max=10.**(noiserat_avg_log+noiserat_scatter_log)-10.**(noiserat_avg_log)
 noiserat_min=10.**(noiserat_avg_log)-10.**(noiserat_avg_log-noiserat_scatter_log)
-print 'Average RMS Noise ratio in images (1 sigma range, frequency='+str(frequency)+' MHz): '+str(frequency)+' MHz): '+str(noiserat_avg)+' (+'+str(noiserat_max)+',-'+str(noiserat_min)+') mJy'
+print 'Average RMS Noise ratio in '+str(len(TMPdata2))+' images (1 sigma range, frequency='+str(frequency)+' MHz): '+str(np.round(noiserat_avg,3))+' (+'+str(np.round(noiserat_max,3))+',-'+str(np.round(noiserat_min,3))+')'
 thresholds2[frequency]=([noiserat_avg,noiserat_max*sigmaRej,noiserat_min*sigmaRej*-1.])
 
 
